@@ -1,0 +1,37 @@
+name: Deploy maven springboot application
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+    code-checkout:
+        runs-on: self-hosted
+        steps:
+          - name: checkout code
+            uses: actions/checkout@v4
+
+    Installation:
+        runs-on: self-hosted
+        steps:
+          - name: install java
+            uses: actions/setup-java@v4
+            with:
+                java-version: '17'
+                distribution: 'temurin'
+              
+    Build:
+        runs-on: self hosted
+        needs: Installation
+
+        steps:
+          - name: build app with maven
+            run: mvn clean package
+
+    Deploy:
+        runs-on: self-hosted
+        needs: Build
+        steps:
+          - name: make application live
+            run: mvn spring-boot:run
+            
