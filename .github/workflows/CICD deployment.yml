@@ -34,5 +34,5 @@ jobs:
         needs: Build
         steps:
           - name: make application live
-            run: echo "application deployed "
+            run: mvn spring-boot:run
             
